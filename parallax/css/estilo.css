@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: antiquewhite;
+}
+
+nav{
+    width: 100vw;
+    height: 10vh;
+    margin: auto;
+    background-color: rgb(238, 172, 182);
+}
+
+ul{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 30px;
+}
+
+li{
+    list-style: none;
+    font-size: 2rem;
+    color: rgb(255, 255, 255);
+}
+
+header{
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 95vh;
+    transform-style: preserve-3d;
+     overflow-y: scroll;
+}
+header img{
+    position: absolute;
+    width: 100%;
+    bottom: 0%;
+}
+
+.titulo{
+    color: rgb(0, 0, 0);
+    font-size: 10vh;
+    position: absolute;
+    right: 0;
+    top: 25%;
+
+    transform: translateY("-50%");
+    z-index: 100;
+    margin: 2vh;
+    transition: right .5 ease-in-out;
+}
+
+#fondo{
+    width: 100vw;
+    height: 100vh;
+    
+}
+#piano{
+    height: 55%;
+    width: auto;
+    transform: translateX(350px);
+    top: 35%;
+}
+#pompom{
+     height: 30%;
+    width: auto;
+    top: 30%;
+    z-index: 1;
+    transform: translateX(-260px);
+    transition: bottom .5 ease-in-out;
+}
+
+.espacio{
+    height: 200vh;
+    width: 100vw;
+    background-color: aliceblue;
+}
