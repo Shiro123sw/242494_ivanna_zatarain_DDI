@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos Básicos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Eventos</h1>
+        
+        <div class="grid">
+            <div class="box" id="box-load">
+                <h2>On Load</h2>
+                <p id="load-text">Cargando...</p>
+            </div>
+
+            <div class="box" id="box-click">
+                <h2>Click</h2>
+                <p>Haz clic aquí</p>
+                <p id="click-count">Clics: 0</p>
+            </div>
+
+            <div class="box" id="box-move">
+                <h2>Mouse Move</h2>
+                <p>Mueve el mouse aquí</p>
+                <p id="coords">X: 0, Y: 0</p>
+            </div>
+
+            <div class="box" id="box-scroll">
+                <h2>Scroll</h2>
+                <p>Haz scroll en la página</p>
+                <p id="scroll-position">Scroll: 0px</p>
+            </div>
+
+            <div class="box parallax-container">
+                <h2>Parallax</h2>
+                <div class="parallax-bg" id="parallax-bg"></div>
+                <p style="position: relative; z-index: 2;">Haz scroll para ver el efecto</p>
+            </div>
+        </div>
+    </div>
+
+   <script src="java/java.js"></script>
+</body>
+</html>

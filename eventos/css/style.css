@@ -1,0 +1,94 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: rgb(170, 136, 170);
+    min-height: 200vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    color: rgb(0, 0, 0);
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: 30px;
+    margin-bottom: 100vh;
+}
+
+.box {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.box h2 {
+    color: #000000;
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+}
+
+.box p {
+    color: #000000;
+    margin: 5px 0;
+}
+
+#box-load {
+    background: #ffffff;
+}
+
+#box-click {
+    background: #ffffff;
+    cursor: pointer;
+}
+
+#box-click:hover {
+    transform: scale(1.05);
+}
+
+#box-move {
+    background: #ffffff;
+    cursor: crosshair;
+}
+
+#box-scroll {
+    background: #ffffff;
+}
+
+.parallax-container {
+    background: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax-bg {
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background: linear-gradient(45deg, #003cff, #ff0000);
+    opacity: 0.3;
+    z-index: 1;
+}
