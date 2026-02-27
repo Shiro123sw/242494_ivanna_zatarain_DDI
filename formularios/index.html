@@ -1,21 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formularios</title>
+    <title>Login y Registro</title>
 </head>
 <body>
-    <form action="">
-        <label for="">Nombre</label>
-        <input type="text" name="nombre" placeholder="ingrea el nombre" id="input_txt_nombre">
-        <br>
-        <label for="">Apellido</label>
-        <input type="text" name="apellido" placeholder="ingrea el apellido" id="input_txt_apellido">
+    <div id="app">
+        <div id="login-container">
+            <h2>Iniciar Sesión</h2>
+            <form id="login-form">
+                <label>Email:</label><br>
+                <input type="email" name="email" required><br><br>
+                
+                <label>Contraseña:</label><br>
+                <input type="password" name="password" required><br><br>
+                
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <br>
+            <button id="btn-ir-registro">Registrarse</button>
+        </div>
 
-        <button id="boton_guardar">Guardar datos</button>
-    </form>
-    
+        <div id="register-container" style="display: none;"></div>
+
+        <div id="mensaje-exito" style="display: none;">
+            <h2 id="titulo-mensaje"></h2>
+            <p id="texto-mensaje"></p>
+            <button id="btn-cerrar-sesion">Cerrar Sesión</button>
+        </div>
+    </div>
+
+    <script src="java.js"></script>
 </body>
-<script src="java/java.js"></script>
 </html>
