@@ -6,6 +6,92 @@ const mensajeExito = document.getElementById('mensaje-exito');
 const loginForm = document.getElementById('login-form');
 const btnIrRegistro = document.getElementById('btn-ir-registro');
 const btnCerrarSesion = document.getElementById('btn-cerrar-sesion');
+const catsContainer = document.getElementById('cats-container');
+
+function cargarUsuariosDesdeLocalStorage() {
+    const usuariosGuardados = localStorage.getItem('usuarios');
+    if (usuariosGuardados) {
+        usuarios = JSON.parse(usuariosGuardados);
+        console.log('Usuarios cargados desde LocalStorage:', usuarios);
+    }
+}
+
+function guardarUsuariosEnLocalStorage() {
+    localStorage.setItem('usuarios', JSON.stringify(usuarios));
+    console.log('Usuarios guardados en LocalStorage:', usuarios);
+}
+
+function guardarSesionActiva(usuario) {
+    localStorage.setItem('sesionActiva', JSON.stringify(usuario));
+    console.log('Sesión activa guardada:', usuario);
+}
+
+function obtenerSesionActiva() {
+    const sesion = localStorage.getItem('sesionActiva');
+    return sesion ? JSON.parse(sesion) : null;
+}
+
+function cerrarSesionActiva() {
+    localStorage.removeItem('sesionActiva');
+    console.log('Sesión cerrada');
+}
+
+function verificarSesionAlCargar() {
+    const sesionActiva = obtenerSesionActiva();
+    if (sesionActiva) {
+        mostrarMensajeExito(
+            '¡Bienvenido de Nuevo!',
+            `Sesión activa de ${sesionActiva.nombre}`
+        );
+    }
+}
+
+function obtenerGatos() {
+    const url = 'https://api.thecatapi.com/v1/images/search?limit=10';
+    
+    fetch(url)
+        .then(respuesta => {
+            if (respuesta.ok) {
+                return respuesta.json();
+            }
+            throw new Error('Error al obtener gatos');
+        })
+        .then(datos => {
+            catsContainer.innerHTML = '<h3>Tus gatitos del dia:</h3>';
+            
+            datos.forEach((gato, index) => {
+                crearTarjetaGato(gato, index + 1);
+            });
+        })
+        .catch(error => {
+            console.log('Error:', error.message);
+            catsContainer.innerHTML = '<p>Error al cargar los gatitos</p>';
+        });
+}
+
+function crearTarjetaGato(gato, numero) {
+    const tarjeta = document.createElement('div');
+    tarjeta.style.border = '2px solid black';
+    tarjeta.style.margin = '10px';
+    tarjeta.style.padding = '10px';
+    tarjeta.style.display = 'inline-block';
+    tarjeta.style.textAlign = 'center';
+    
+    const titulo = document.createElement('h4');
+    titulo.textContent = `Gato #${numero}`;
+    
+    const imagen = document.createElement('img');
+    imagen.src = gato.url;
+    imagen.alt = `Gato ${numero}`;
+    imagen.width = 200;
+    imagen.height = 180;
+    imagen.style.objectFit = 'cover';
+    
+    tarjeta.appendChild(titulo);
+    tarjeta.appendChild(imagen);
+    
+    catsContainer.appendChild(tarjeta);
+}
 
 function crearFormularioRegistro() {
     const form = document.createElement('form');
@@ -32,9 +118,7 @@ function crearFormularioRegistro() {
     `;
 
     registerContainer.appendChild(form);
-
     form.addEventListener('submit', manejarRegistro);
-
     document.getElementById('btn-ir-login').addEventListener('click', mostrarLogin);
 }
 
@@ -42,6 +126,7 @@ function mostrarLogin() {
     loginContainer.style.display = 'block';
     registerContainer.style.display = 'none';
     mensajeExito.style.display = 'none';
+    cerrarSesionActiva();
 }
 
 function mostrarRegistro() {
@@ -57,6 +142,8 @@ function mostrarMensajeExito(titulo, mensaje) {
     
     document.getElementById('titulo-mensaje').textContent = titulo;
     document.getElementById('texto-mensaje').textContent = mensaje;
+    
+    obtenerGatos();
 }
 
 function validarFormulario(formData, esRegistro) {
@@ -83,6 +170,12 @@ function validarFormulario(formData, esRegistro) {
             alert('Las contraseñas no coinciden');
             return false;
         }
+        
+        const emailExiste = usuarios.some(user => user.email === valores.email);
+        if (emailExiste) {
+            alert('Este email ya está registrado');
+            return false;
+        }
     }
 
     return valores;
@@ -92,7 +185,6 @@ function manejarRegistro(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-
     const datos = validarFormulario(formData, true);
     if (!datos) return;
 
@@ -103,9 +195,12 @@ function manejarRegistro(e) {
     };
 
     usuarios.push(nuevoUsuario);
-
+    
+    guardarUsuariosEnLocalStorage();
+    
+    guardarSesionActiva(nuevoUsuario);
+    
     console.log('Usuarios registrados:', usuarios);
-
     e.target.reset();
 
     mostrarMensajeExito(
@@ -118,7 +213,6 @@ function manejarLogin(e) {
     e.preventDefault();
 
     const formData = new FormData(e.target);
-
     const datos = validarFormulario(formData, false);
     if (!datos) return;
 
@@ -131,6 +225,8 @@ function manejarLogin(e) {
         return;
     }
 
+    guardarSesionActiva(usuario);
+
     e.target.reset();
 
     mostrarMensajeExito(
@@ -140,9 +236,11 @@ function manejarLogin(e) {
 }
 
 btnIrRegistro.addEventListener('click', mostrarRegistro);
-
 loginForm.addEventListener('submit', manejarLogin);
-
 btnCerrarSesion.addEventListener('click', mostrarLogin);
 
 crearFormularioRegistro();
+
+cargarUsuariosDesdeLocalStorage();
+
+verificarSesionAlCargar();
